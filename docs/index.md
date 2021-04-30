@@ -6,7 +6,7 @@ Asienta las bases para convertirte en el Data Scientist del futuro con todo el c
 
 ### Para repasar contenidos básicos previos
 
-* [Preliminares del curso](https://joanby.github.io/curso-algebra-lineal/Tema0-Preliminares#1)
+* [Preliminares del curso](https://joanby.github.io/curso-algebra-lineal/Tema0-Preliminares#1)  
 * [Trigonometría](https://joanby.github.io/curso-algebra-lineal/00-trigonometría#1)
 
 ### El contenido teórico del curso
