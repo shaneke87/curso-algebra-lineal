@@ -1,0 +1,55 @@
+---
+title: "Tarea 4 Matrices"
+author: "Oscar Omar"
+date: "10/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+```
+
+
+```{r}
+
+A <- matrix(c(0,1,-2,2,3,-1,1,-1,5), nrow = 3, ncol = 3, byrow = TRUE)
+B <- matrix(c(1,-1,2,1,2,-2,2,-2,-1,2,1,2), nrow = 3, ncol = 4, byrow = TRUE)
+C <- matrix(c(2,0,1,-4), ncol = 1)
+A
+B
+C
+
+AB <- A%*%B
+BC <- B%*%C
+Bt <- t(B)
+Ct <- t(C)
+BtA <- Bt%*%A
+CtBt <- Ct%*%Bt
+AB
+BC
+Bt
+BtA
+CtBt
+```
+
+
+```{python}
+import numpy as np
+A = np.array([[0,1,-2], [2,3,-1], [1,-1,5]])
+B = np.array([[1,-1,2,1], [2,-2,2,-2], [-1,2,1,2]])
+C = np.array([[2],[0],[1],[-4]])
+print(A)
+print(B)
+print(C)
+print(A.dot(B))
+print(B.dot(C))
+Bt = B.transpose()
+Ct = C.transpose()
+print(Bt)
+print(Bt.dot(A))
+print(Ct.dot(Bt))
+
+```
+
+
