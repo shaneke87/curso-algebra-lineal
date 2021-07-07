@@ -1,0 +1,291 @@
+---
+title: "Tarea Vectores"
+author: "Oscar Omar"
+date: "5/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(reticulate)
+require(pracma)
+require(matlib)
+```
+
+```{r include=FALSE}
+productoEscalar = function(x,y){
+  if(length(x) == length(y)){
+    sum(x*y)
+  }else {
+    print("ERROR: No se puede calcular el producto escalar de estos dos vectores porque no son de la misma dimension")
+  }
+}
+
+normaVector = function(x){
+  sqrt(productoEscalar(x,x))
+}
+
+distancia = function(x,y){
+  if(length(x) == length(y)){
+    Norm(x-y)
+  }else {
+    print("ERROR: No se puede calcular el producto escalar de estos dos vectores porque no son de la misma dimension")
+  }
+}
+
+
+angleRad = function(x,y){
+  if(length(x) == length(y)){
+    acos(productoEscalar(x,y)/Norm(x)*Norm(y))
+  }else {
+    print("ERROR: No se puede calcular el producto escalar de estos dos vectores porque no son de la misma dimension")
+  }
+}
+
+angleGrad = function(x,y){
+  if(length(x) == length(y)){
+    acos(productoEscalar(x,y)/(Norm(x)*Norm(y)))*360/(2*pi)
+  }else {
+    print("ERROR: No se puede calcular el producto escalar de estos dos vectores porque no son de la misma dimension")
+  }
+}
+
+proyeccionOrt = function(x,y){
+  if(length(x) == length(y)){
+    productoEscalar(x,y)/Norm(x)^2*x
+  }else {
+    print("ERROR: No se puede calcular el producto escalar de estos dos vectores porque no son de la misma dimension")
+  }
+}
+
+productoVectorial = function(x,y){
+  if(length(x) == length(y) & length(x) == 3){
+    c(x[2]*y[3] - x[3]*y[2], x[1]*y[3] - x[3]*y[1], x[1]*y[2] - x[2]*y[1])
+  }else {
+    print("No se cumplen las condiciones necesarias paracalcular el producto vectorial de estos dos vetores")
+  }
+}
+
+productoMixto = function(x,y,z){
+  if(length(x) == length(y) & length(x) == length(z) & length(x) == 3){
+    det(rbind(x,y,z))
+  }else {
+    print("No se cumplen las condiciones necesarias para calcular el producto mixto de los tres vectores")
+  }
+}
+```
+
+```{python include=FALSE}
+import numpy as np
+def productoEscalar(x,y):
+  import numpy as np
+  if len(x) == len(y):
+    suma = 0
+    for i in range(0, len(x)):
+      suma = suma + x[i]*y[i]
+    return suma
+  else:
+    return "Error: las longitudes de los vectores no coinciden"
+
+def distancia(x,y):
+  import numpy as np
+  if len(x) == len(y):
+    dist = np.linalg.norm(x-y)
+    return dist
+  else:
+    return "Error: las longitudes de los vectores no coinciden"
+  
+def angleRad(x,y):
+  import numpy as np
+  import math
+  if len(x) == len(y):
+    angle = math.acos(productoEscalar(x,y)/(np.linalg.norm(x)*np.linalg.norm(y)))
+    return angle
+  else:
+    return "ERROR: las dimenciones no coinciden"
+  
+def angleGrad(x,y):
+  import numpy as np
+  import math
+  if len(x) == len(y):
+    angle = math.acos(productoEscalar(x,y)/(np.linalg.norm(x)*np.linalg.norm(y)))
+    return angle/(2*math.pi)*360
+  else:
+    return "ERROR: las dimenciones no coinciden"
+
+def proyeccionOrt(x,y):
+  import numpy as np
+  if len(x) == len(y):
+    proy = (productoEscalar(x,y)/pow(np.linalg.norm(x),2))*x
+    return proy
+  else:
+    return "ERROR: las dimenciones no coinciden"
+
+def productoVectorial(x,y):
+  import numpy as np
+  if len(x) == len(y) and len(x) == 3:
+    z = np.array([x[1]*y[2] - x[2]*y[1], -(x[0]*y[2] - x[2]*y[0]), x[0]*y[1] - x[1]*y[0]])
+    return z
+  else:
+    return "Error"
+  
+def productoMixto(x,y,z):
+  import numpy as np
+  if len(x) == len(y) and len(x) == len(z) and len(z) == 3:
+    return np.linalg.det(np.array([x,y,z]))
+  else:
+    return "Error"
+```
+
+
+
+## Pregunta 1 en `R`
+```{r}
+vectorEquivalente <- function(AB, C){
+  D = AB + C
+  return(D)
+}
+
+A = c(1,2)
+B = c(0,3)
+C = c(-1,0)
+D = vectorEquivalente(B - A, C)
+D
+```
+
+## Pregunta 1 en `PYTHON`
+```{python}
+def vectorEquivalente(AB, C):
+  D = AB + C
+  return D
+
+import numpy as np
+A = np.array([1,2])
+B = np.array([0,3])
+C = np.array([-1,0])
+D = vectorEquivalente(B - A, C)
+D
+```
+
+## Pregunta 2 en `R`
+```{r}
+v <- c(9,-10)
+Norm(v)
+
+OX = c(1,0)
+angleGrad(v,OX)
+```
+
+## Pregunta 2 en `PYTHON`
+```{python}
+v = np.array(([9,-10]))
+np.linalg.norm(v)
+OX = np.array([1,0])
+angleGrad(v, OX)
+```
+
+## Pregunta 3 en `R`
+```{r}
+u <- c(9,1,0)
+v <- c(-3,5,1)
+w <- c(1,10,-5)
+
+productoEscalar(u,v) == productoEscalar(v,u)
+productoEscalar(u,v + w) == productoEscalar(u,v) + productoEscalar(u,w)
+a <- 5
+a * productoEscalar(u,v) == productoEscalar(a * u, v)
+
+```
+
+## Pregunta 3 en `PYTHON`
+```{python}
+u = np.array([9,1,0])
+v = np.array([-3,5,1])
+w = np.array([1,10,-5])
+
+productoEscalar(u,v) == productoEscalar(v,u)
+productoEscalar(u,v + w) == productoEscalar(u,v) + productoEscalar(u,w)
+a = 5
+a * productoEscalar(u,v) == productoEscalar(a * u, v)
+```
+
+## Pregunta 4 en `R`
+```{r}
+u <- c(11,20,-13)
+Norm(u)
+Norm(5 * u) == 5 * Norm(u)
+Norm(-9 * u) == 9 * Norm(u)
+Norm(u / Norm(u))
+```
+
+## Pregunta 4 en `PYTHON`
+```{python}
+u = np.array([11,20,-13])
+np.linalg.norm(u)
+np.linalg.norm(5 * u) == 5 * np.linalg.norm(u)
+np.linalg.norm(-9 * u) == 9 * np.linalg.norm(u)
+round(np.linalg.norm(u / np.linalg.norm(u)))
+
+```
+
+## Pregunta 5 en `R`
+```{r}
+a <- c(1,-2,0)
+b <- c(10,-11,7)
+c <- c(-15,-7,3)
+
+distancia(a,b)
+distancia(a,c)
+distancia(b,c)
+```
+
+## Pregunta 5 en `PYTHON`
+```{python}
+a = np.array([1,-2,0])
+b = np.array([10,-11,7])
+c = np.array([-15,-7,3])
+
+distancia(a,b)
+distancia(a,c)
+distancia(b,c)
+```
+
+## Pregunta 6 en `R`
+```{r}
+a <- c(1,-2,0)
+b <- c(10,-11,7)
+c <- c(-15,-7,3)
+
+angleGrad(b - a, c - a)
+angleGrad(b - c, a - c)
+```
+
+## Pregunta 6 en `PYTHON`
+```{python}
+a = np.array([1,-2,0])
+b = np.array([10,-11,7])
+c = np.array([-15,-7,3])
+
+angleGrad(b - a, c - a)
+angleGrad(b - c, a - c)
+```
+
+## Pregunta 7 en `R`
+```{r}
+ortogonal <- function(v){
+  u = c(-v[2], v[1])
+  return(u)
+}
+
+ortogonal(c(5,-3))
+```
+
+## Pregunta 7 en `PYTHON`
+```{python}
+def ortogonal(v):
+  import numpy as np
+  u = np.array([-v[1], v[0]])
+  return u
+
+ortogonal(np.array([5,-3]))
+```

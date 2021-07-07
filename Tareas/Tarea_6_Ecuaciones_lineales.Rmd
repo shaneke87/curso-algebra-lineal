@@ -1,0 +1,167 @@
+---
+title: "Tarea 6 Ecuaciones lineales"
+author: "Oscar Omar"
+date: "13/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+library(matlib)
+```
+
+# Problema # 1 `R`
+```{r}
+A <- rbind(c(10,2,-1,1,0,10),c(-1,-3,0,0,-1,5),c(0,-1,3,-1,0,0),c(17,1,0,3,5,-15),c(0,-10,0,-5,3,0),c(-3,1,1,1,-2,2))
+b <- c(0,5,5,4,-21,11)
+AB <- cbind(A,b)
+AB
+qr(A)$rank
+qr(A)$rank==qr(AB)$rank
+Solve(A,b)
+
+```
+
+# Problema # 1 `Python`
+```{python}
+import numpy as np
+A = np.array([[10,2,-1,1,0,10],[-1,-3,0,0,-1,5],[0,-1,3,-1,0,0],[17,1,0,3,5,-15],[0,-10,0,-5,3,0],[-3,1,1,1,-2,2]])
+b = np.array([0,5,5,4,-21,11])
+AB = np.array([[10,2,-1,1,0,10,0],[-1,-3,0,0,-1,5,5],[0,-1,3,-1,0,0,5],[17,1,0,3,5,-15,4],[0,-10,0,-5,3,0,-21],[-3,1,1,1,-2,2,11]])
+np.linalg.matrix_rank(A)
+np.linalg.matrix_rank(A) == np.linalg.matrix_rank(AB)
+np.linalg.solve(A, b)
+```
+
+# Problema # 2 `R`
+```{r}
+A <- rbind(c(-2,2,-1,1,0,4,0),c(-1,-3,0,0,-1,5,-2),c(0,-1,3,-1,0,0,0),c(0,1,0,3,-2,1,4),c(0,-3,0,-5,3,0,-2),c(-3,1,1,1,-2,2,1))
+b <- c(5,3,5,0,5,0)
+AB <- cbind(A,b)
+AB
+qr(A)$rank
+qr(A)$rank==qr(AB)$rank
+Solve(A,b)
+
+```
+
+# Problema # 2 `Python`
+```{python}
+from sympy import *
+from sympy.solvers.solveset import linsolve
+A = np.array([[-2,2,-1,1,0,4,0],
+                [-1,-3,0,0,-1,5,-2],
+                [0,-1,3,-1,0,0,0],
+                [0,1,0,3,-2,1,4],
+                [0,-3,0,-5,3,0,-2],
+                [-3,1,1,1,-2,2,1]])
+            
+b = np.array([5,3,5,0,5,0])
+
+AB = np.array([[-2,2,-1,1,0,4,0,5],
+               [-1,-3,0,0,-1,5,-2,3],
+               [0,-1,3,-1,0,0,0,5],
+               [0,1,0,3,-2,1,4,0],
+               [0,-3,0,-5,3,0,-21,5],
+               [-3,1,1,1,-2,2,1,0]])
+              
+np.linalg.matrix_rank(A)
+np.linalg.matrix_rank(A) == np.linalg.matrix_rank(AB)
+x1,x2,x3,x4,x5,x6,x7 = symbols('x1,x2,x3,x4,x5,x6,x7')
+
+linsolve(Matrix(([-2,2,-1,1,0,4,0,5],
+               [-1,-3,0,0,-1,5,-2,3],
+               [0,-1,3,-1,0,0,0,5],
+               [0,1,0,3,-2,1,4,0],
+               [0,-3,0,-5,3,0,-21,5],
+               [-3,1,1,1,-2,2,1,0])), (x1,x2,x3,x4,x5,x6,x7))
+```
+
+# Problema # 3 `R`
+```{r}
+A <- rbind(c(10,2,-1,1,0,10),
+           c(-1,-3,0,0,-1,5),
+           c(9,-1,-1,1,-1,15),
+           c(17,1,0,3,5,-15),
+           c(0,-10,0,-5,3,0),
+           c(-3,1,1,1,-2,2))
+b <- c(0,5,0,4,-21,11)
+AB <- cbind(A,b)
+AB
+qr(A)$rank
+qr(AB)$rank
+qr(A)$rank==qr(AB)$rank
+
+```
+
+# Problema # 3 `Python`
+```{python}
+from sympy import *
+from sympy.solvers.solveset import linsolve
+A = np.array([[10,2,-1,1,0,10],[-1,-3,0,0,-1,5],[9,-1,-1,1,-1,15],[17,1,0,3,5,-15],[0,-10,0,-5,3,0],[-3,1,1,1,-2,2]])
+b = np.array([0,5,0,4,-21,11])
+AB = np.array([[10,2,-1,1,0,10,0],[-1,-3,0,0,-1,5,5],[9,-1,-1,1,-1,15,0],[17,1,0,3,5,-15,4],[0,-10,0,-5,3,0,-21],[-3,1,1,1,-2,2,11]])
+np.linalg.matrix_rank(A)
+np.linalg.matrix_rank(AB)
+np.linalg.matrix_rank(A) == np.linalg.matrix_rank(AB)
+
+linsolve(Matrix(([10,2,-1,1,0,10,0],[-1,-3,0,0,-1,5,5],[9,-1,-1,1,-1,15,0],[17,1,0,3,5,-15,4],[0,-10,0,-5,3,0,-21],[-3,1,1,1,-2,2,11])), (x1,x2,x3,x4,x5,x6))
+```
+
+# Problema # 4 `R`
+```{r}
+A <- rbind(c(-6,-3),c(0,-3))
+B <- rbind(c(-1,0),c(4,-2))
+I <- diag(1, nrow = 2, ncol = 2)
+
+A
+
+M <- A + 5*I
+N <- -3*B
+
+X = solve(M,N)
+X
+
+-5*X
+A%*%X + 3*B
+
+A%*%X + 3*B == -5*X
+
+
+A <- rbind(c(1,2),c(0,2))
+B <- rbind(c(2,-1),c(-1,5))
+C <- rbind(c(2,6),c(-1,-0.5))
+I <- diag(1, nrow = 2, ncol = 2)
+
+M <- A%*%C + I
+N <- 10*I - 3*B
+
+X = solve(M,N)
+X
+
+A%*%C%*%X + 3*B == 10*I - X
+
+
+```
+
+# Problema # 4 `Python`
+```{python}
+A = np.array([[-6,-3],[0,-3]])
+B = np.array([[-1,0],[4,-2]])
+I = np.diag([1,1])
+
+X = np.linalg.inv(A + 5*I).dot(-3*B)
+
+print(X)
+
+A = np.array([[1,2],[0,2]])
+B = np.array([[2,-1],[-1,5]])
+C = np.array([[2,6],[-1,-0.5]])
+I = np.diag([1,1])
+
+X = np.linalg.inv(A.dot(C) + I).dot(10*I - 3*B)
+print(X)
+
+
+```

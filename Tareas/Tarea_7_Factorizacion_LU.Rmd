@@ -1,0 +1,94 @@
+---
+title: "Tarea Factorizacion LU"
+author: "Oscar Omar"
+date: "17/6/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(matlib)
+require(reticulate)
+```
+
+## Tarea `R`
+### Ejercicio 1
+```{r}
+A1 = rbind(c(0,2,-3,4),c(0,0,-5,-1),c(5,-1,-2,0),c(-2,0,4,6))
+luA1 = LU(A1)
+luA1
+luA1$L %*% luA1$U
+```
+
+### Ejercicio 2
+```{r}
+A1 = rbind(c(1,2,-1,4),c(0,-1,5,8),c(2,3,1,4),c(1,-1,6,4))
+luA1 = LU(A1)
+luA1
+luA1$L %*% luA1$U
+```
+
+### Ejercicio 3
+```{r}
+A1 = rbind(c(2,4,-2,0),c(3,7,5,-4),c(-1,2,-2,5),c(6,1,0,2))
+luA1 = LU(A1)
+luA1
+luA1$L %*% luA1$U
+```
+
+### Ejercicio 4
+```{r}
+A1 = rbind(c(0,2,3,1),c(0,4,-1,5),c(2,0,3,1),c(1,-4,5,6))
+luA1 = LU(A1)
+luA1
+luA1$L %*% luA1$U
+```
+
+## Tarea `PYTHON`
+### Ejercicio 1
+```{python}
+import scipy
+import scipy.linalg
+A1 = scipy.array([[0,2,-3,4],[0,0,-5,-1],[5,-1,-2,0],[-2,0,4,6]])
+P1,L1,U1 = scipy.linalg.lu(A1)
+print(P1)
+print(L1)
+print(U1)
+print(L1.dot(U1))
+```
+
+### Ejercicio 2
+```{python}
+import scipy
+import scipy.linalg
+A1 = scipy.array([[1,2,-1,4],[0,-1,5,8],[2,3,1,4],[1,-1,6,4]])
+P1,L1,U1 = scipy.linalg.lu(A1)
+print(P1)
+print(L1)
+print(U1)
+print(L1.dot(U1))
+```
+
+### Ejercicio 3
+```{python}
+import scipy
+import scipy.linalg
+A1 = scipy.array([[2,4,-2,0],[3,7,5,-4],[-1,2,-2,5],[6,1,0,2]])
+P1,L1,U1 = scipy.linalg.lu(A1)
+print(P1)
+print(L1)
+print(U1)
+print(L1.dot(U1))
+```
+
+### Ejercicio 4
+```{python}
+import scipy
+import scipy.linalg
+A1 = scipy.array([[0,2,3,1],[0,4,-1,5],[2,0,3,1],[1,-4,5,6]])
+P1,L1,U1 = scipy.linalg.lu(A1)
+print(P1)
+print(L1)
+print(U1)
+print(L1.dot(U1))
+```

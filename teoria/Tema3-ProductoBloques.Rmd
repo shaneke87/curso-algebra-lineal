@@ -1,10 +1,11 @@
 ---
 title: "Tema 3 - Producto por bloques y factorizaciones triangulares"
-author: Juan Gabriel Gomila & María Santos
-date: 
-output: 
+author: "Juan Gabriel Gomila & María Santos"
+date: "null"
+output:
+  beamer_presentation: default
   ioslides_presentation:
-    widescreen: true
+    widescreen: yes
     css: Mery_style.css
     logo: Images/matriz_mov.gif
 ---

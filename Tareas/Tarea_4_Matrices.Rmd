@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
+library(expm)
 ```
 
 
@@ -31,6 +32,37 @@ BC
 Bt
 BtA
 CtBt
+
+MA <- matrix(c(0,1,0,1), nrow = 2, ncol = 2, byrow = TRUE)
+MB <- matrix(c(-1,-1,0,0), nrow = 2, ncol = 2, byrow = TRUE)
+MABSQUARE <- (MA + MB)%^%2
+MABBINOMIAL <- MA%^%2 + 2*(MA%*%MB) + MB%^%2
+MABSQUARE
+MABBINOMIAL
+MABSQUARE == MABBINOMIAL
+MAB3 = (MA + MB)%^%3
+MAB3BIN = MA%^%3 + 3*(MA%^%2%*%MB) + 3*(MA%*%MB%^%2) + MB%^%3
+MAB3
+MAB3BIN
+
+MAB3 == MAB3BIN
+
+a <- matrix(c(-1,1,-2,1,1,0,2,1,1), ncol = 3, nrow = 3, byrow = TRUE)
+b <- matrix(c(-1,2,3,4,5,1,2,1,3,2,0,4,4,7,7), ncol = 5, nrow = 3, byrow = TRUE)
+qr(a)$rank
+qr(b)$rank
+
+a <- matrix(c(1,2,0,0,1,-1,0,0,2), ncol = 3, nrow = 3, byrow = TRUE)
+b <- matrix(c(1i,0,0,0,0,1,1,1i,0), ncol = 3, nrow = 3, byrow = TRUE)
+a
+b
+solve(a)
+solve(b)
+round(a%*%solve(a))
+round(b%*%solve(b))
+
+
+
 ```
 
 
@@ -49,6 +81,43 @@ Ct = C.transpose()
 print(Bt)
 print(Bt.dot(A))
 print(Ct.dot(Bt))
+
+def mpow(matrix, pow):
+  return np.linalg.matrix_power(matrix, pow)
+
+MA = np.array([[0,1],[0,1]])
+MB = np.array([[-1,-1],[0,0]])
+print(MA)
+print(MB)
+print(mpow((MA + MB), 2))
+print(mpow(MA, 2) + 2*(MA.dot(MB)) + mpow(MB, 2))
+print(mpow(MA, 2) + 2*(MA.dot(MB)) + mpow(MB, 2) == mpow((MA + MB), 2))
+
+print(mpow((MA + MB), 3))
+MAP = mpow(MA, 2)
+MBP = mpow(MB, 2)
+print(mpow(MA, 3) + 3*(MAP.dot(MB)) + 3*(MA.dot(MBP)) + mpow(MB, 3))
+print(mpow(MA, 3) + 3*(MAP.dot(MB)) + 3*(MA.dot(MBP)) + mpow(MB, 3) == mpow((MA + MB), 3))
+
+def rankmat(matrix):
+  return np.linalg.matrix_rank(matrix)
+
+a = np.array([[-1,1,-2],[1,1,0],[2,1,1]])
+b = np.array([[-1,2,3,4,5],[1,2,1,3,2],[0,4,4,7,7]])
+print(a)
+print(b)
+print(rankmat(a))
+print(rankmat(b))
+
+
+a = np.array([[1,2,0],[0,1,-1],[0,0,2]])
+b = np.array([[1j,0,0],[0,0,1],[1,1j,0]])
+print(a)
+print(b)
+print(np.linalg.inv(a))
+print(np.linalg.inv(b))
+print(np.linalg.inv(a).dot(a))
+print(np.linalg.inv(b).dot(b))
 
 ```
 
