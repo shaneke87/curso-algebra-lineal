@@ -1,0 +1,120 @@
+---
+title: "Cadenas de Markov"
+author: "Oscar Omar"
+date: "15/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(reticulate)
+require(matlib)
+require(pracma)
+```
+
+```{r}
+p = matrix(c(0.3,0.1,0,0.2,0.1,0.6,0.3,0.1,0.4,0.2,0.4,0.5,0.2,0.1,0.3,0.2), 
+           nrow = 4, byrow = T)
+round(eigen(p)$values, 4) #Vaps
+round(eigen(p)$vectors, 4) #Veps
+round(apply(eigen(p)$vectors, MARGIN = 2, sum), 4)
+```
+
+## Ejemplo 10
+```{r}
+p = matrix(c(0.3, rep(0.2, 3), 0.3, 0.4, rep(0.2, 8), rep(0.4, 2)), 
+           nrow = 4, byrow = T)
+round(eigen(p)$values, 3) #Vaps
+round(eigen(p)$vectors, 3) #Veps
+# round(apply(eigen(p)$vectors, MARGIN = 2, sum), 3)
+
+x = round(eigen(p)$vectors, 3) #Veps
+s0 = c(1,0,0,0)
+c = round(solve(x)%*%s0, 3)
+c
+
+d = diag(round(eigen(p)$values, 3))
+s1 = round(x%*%d%*%c, 3)
+s1
+
+s2 = round(x%*%d^2%*%c, 3)
+s2
+
+s5 = round(x%*%d^5%*%c, 3)
+s5
+
+s20 = round(x%*%d^20%*%c, 3)
+s20
+
+s_n = function(x,d,s0,n){
+  c = solve(x)%*%s0
+  sn = x%*%d^n%*%c
+  return(round(sn, 3))
+}
+
+s20 = s_n(x,d,s0,20)
+s20
+```
+
+## Ejemplo 11
+
+```{r}
+p = matrix(c(0.1,0.4,0.2,0.1,0.4,0.6,0.8,0.2,0.2), nrow = 3, byrow = T)
+round(eigen(p)$values, 3)
+d = diag(round(eigen(p)$values, 3))
+d
+x = round(eigen(p)$vectors, 3)
+x
+
+s0 = c(1,0,0)
+c = round(solve(x)%*%s0, 3)
+c
+
+s1 = s_n(x,d,s0,1)
+s1
+s2 = s_n(x,d,s0,2)
+s2
+s5 = s_n(x,d,s0,5)
+s5
+s20 = s_n(x,d,s0,20)
+s20
+
+```
+
+## Ejemplo 12
+```{r}
+p = matrix(c(0.1,0.3,1,0.2,0.3,0,0.7,0.4,0), nrow = 3, byrow = T)
+round(eigen(p)$values, 3)
+x = round(eigen(p)$vectors, 3)
+x
+
+a1 = round(x%*%diag(c(1,0,0))%*%solve(x), 3)
+a1
+a2 = round(x%*%diag(c(0,1,0))%*%solve(x), 3)
+a2
+a3 = round(x%*%diag(c(0,0,1))%*%solve(x), 3)
+a3
+```
+
+## Ejemplo 13
+```{r}
+p = matrix(c(0.2,0.4,0.2,0.1,0.4,0.6,0.7,0.2,0.2), nrow = 3, byrow = T)
+round(eigen(p)$values, 3)
+x = round(eigen(p)$vectors, 3)
+x
+
+a1 = round(x%*%diag(c(1,0,0))%*%solve(x), 3)
+a1
+a2 = round(x%*%diag(c(0,1,0))%*%solve(x), 3)
+a2
+a3 = round(x%*%diag(c(0,0,1))%*%solve(x), 3)
+a3
+```
+
+## Ejemplo 16
+```{r}
+p = matrix(c(0.2,0.4,0.5,0.8,0,0.5,0,0.3,0), ncol = 3, byrow = T)
+round(eigen(p)$values, 3)
+p
+```
+

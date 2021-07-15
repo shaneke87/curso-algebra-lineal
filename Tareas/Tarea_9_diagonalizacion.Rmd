@@ -1,0 +1,65 @@
+---
+title: "Diagonalizacion"
+author: "Oscar Omar"
+date: "14/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(reticulate)
+require(pracma)
+require(matlib)
+require(dplyr)
+```
+
+## Diagonalizacion en `R`
+```{r}
+a = rbind(c(2,-2,1), c(2,-8,-2),c(1,2,2))
+a
+isSymmetric(a)
+eigen(a) -> eig
+eig
+
+eig$values
+l1 = eig$values[1]
+l1
+
+eig$vectors
+v1 = eig$vectors[, 1]
+v1
+
+a%*%v1
+l1*v1
+
+near(a%*%v1,l1*v1)
+```
+
+## Diagonalizacion en `PYTHON`
+```{python}
+import numpy as np
+from numpy import linalg as LA
+
+a = np.array([[2,-2,1],[2,-8,-2],[1,2,2]])
+print(a)
+
+w, v = LA.eig(a)
+
+print(w)
+print(v)
+
+l1 = w[0]
+v1 = v[:,0]
+print(np.dot(a, v1))
+print(l1*v1)
+
+np.dot(a, v1) == l1*v1
+
+np.dot(a, v1) - l1*v1
+
+np.isclose(np.dot(a, v1), l1*v1)
+
+
+```
+
+
